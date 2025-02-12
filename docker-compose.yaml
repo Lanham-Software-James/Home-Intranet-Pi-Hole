@@ -7,9 +7,12 @@ services:
       - "53:53/udp"
       - "67:67/udp"
       - "8080:80/tcp"
+    networks:
+      - home-intranet-nginx
     environment:
       TZ: 'America/New_York'
       WEBPASSWORD: ${WEB_PASSWORD}
+      VIRTUAL_HOST: "pihole.homeintranet.local"
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
