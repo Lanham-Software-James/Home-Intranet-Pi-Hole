@@ -12,7 +12,7 @@ services:
     environment:
       TZ: 'America/New_York'
       WEBPASSWORD: ${WEB_PASSWORD}
-      VIRTUAL_HOST: "pihole.homeintranet.local"
+      VIRTUAL_HOST: "pihole.intranet.local"
       VIRTUAL_PROTO: "http"
       VIRTUAL_PORT: 80
     dns:
