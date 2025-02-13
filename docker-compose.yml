@@ -7,7 +7,8 @@ services:
       - "53:53/udp"
       - "67:67/udp"
     networks:
-      - home-intranet-nginx
+      home-intranet-nginx:
+        ipv4_address: 172.20.0.100
     environment:
       TZ: 'America/New_York'
       WEBPASSWORD: ${WEB_PASSWORD}
