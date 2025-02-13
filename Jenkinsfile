@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         SERVER_IP = '192.168.0.39'
-        DEPLOY_DIR = '/opt/stacks/pihole'
+        DEPLOY_DIR = '/opt/stacks/pi-hole'
         CREDENTIALS_ID = 'home-intranet-server-ssh'
     }
     stages {
