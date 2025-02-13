@@ -16,7 +16,7 @@ pipeline {
         stage('Copy Files to Server') {
             steps {
                 sshagent(credentials: [CREDENTIALS_ID]) {
-                    sh "scp -o StrictHostKeyChecking=no docker-compose.prd.yml ${SERVER_IP}:${DEPLOY_DIR}/docker-compose.yml"
+                    sh "scp -o StrictHostKeyChecking=no docker-compose.yml ${SERVER_IP}:${DEPLOY_DIR}/docker-compose.yml"
                 }
             }
         }
