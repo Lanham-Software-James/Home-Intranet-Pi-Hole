@@ -41,5 +41,3 @@ services:
 networks:
   home-intranet-nginx:
     external: true
-
-    # tskey-auth-kw1vup6k3d11CNTRL-nmMGQECsTF8wgeFyJ4mSF8EVnAN2d8ZXG
