@@ -15,16 +15,31 @@ services:
       VIRTUAL_HOST: "pihole.intranet.local"
       VIRTUAL_PROTO: "http"
       VIRTUAL_PORT: 80
+      TAILSCALE_AUTH_KEY: ${TAILSCALE_AUTH_KEY}
     dns:
       - 8.8.8.8
       - 8.8.4.4
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
+      - './tailscale:/var/lib/tailscale'
+      - '/dev/net/tun:/dev/net/tun'
     cap_add:
       - NET_ADMIN
+      - NET_RAW
     restart: unless-stopped
-
+    command: |
+      /bin/sh -c "
+      apt-get update && apt-get install -y curl
+      curl -fsSL https://tailscale.com/install.sh | sh
+      tailscaled --state=/var/lib/tailscale/tailscaled.state &
+      sleep 10
+      tailscale up --authkey=$${TAILSCALE_AUTH_KEY} --accept-dns=false
+      while true; do sleep 1000; done &
+      exec /s6-init
+      "
 networks:
   home-intranet-nginx:
     external: true
+
+    # tskey-auth-kw1vup6k3d11CNTRL-nmMGQECsTF8wgeFyJ4mSF8EVnAN2d8ZXG
