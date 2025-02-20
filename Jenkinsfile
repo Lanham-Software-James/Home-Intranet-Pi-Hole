@@ -28,6 +28,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ${SERVER_IP} \
                         "cd ${DEPLOY_DIR} && \
                         docker compose down && \
+                        docker compose pull && \
                         docker compose up -d"
                     """
                 }
