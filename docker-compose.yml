@@ -7,6 +7,7 @@ services:
       - TS_AUTHKEY=${TAILSCALE_AUTH_KEY}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=false
+      - TS_SERVE_CONFIG=pihole.json
     volumes:
       - pihole-tailscale:/var/lib/tailscale
     devices:
