@@ -3,6 +3,11 @@ services:
     image: tailscale/tailscale:latest
     container_name: pihole-tailscale
     hostname: pihole
+    healthcheck:
+      test: ["CMD", "tailscale", "status", "--peers=false"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       - TS_AUTHKEY=${TAILSCALE_AUTH_KEY}
       - TS_STATE_DIR=/var/lib/tailscale
@@ -10,6 +15,8 @@ services:
       - TS_SERVE_CONFIG=pihole.json
     volumes:
       - pihole-tailscale:/var/lib/tailscale
+      - ./pihole.json:/pihole.json
+      - ./resolv.conf:/etc/resolv.conf # Manually configuring upstream DNS
     devices:
       - /dev/net/tun:/dev/net/tun
     cap_add:
@@ -27,7 +34,10 @@ services:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
     cap_add:
-      - NET_ADMIN
+      - net_admin
+    depends_on:
+      pihole-tailscale:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
