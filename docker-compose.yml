@@ -9,7 +9,8 @@ services:
       timeout: 5s
       retries: 5
     environment:
-      - TS_AUTHKEY=${TAILSCALE_AUTH_KEY}
+      - TS_AUTHKEY=${TAILSCALE_OAUTH_KEY}
+      - TS_EXTRA_ARGS=--advertise-tags=tag:intranet --reset
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=false
       - TS_SERVE_CONFIG=pihole.json
