@@ -16,8 +16,14 @@ pipeline {
         stage('Copy Files to Server') {
             steps {
                 sshagent(credentials: [CREDENTIALS_ID]) {
+                    // Copy docker-compose.yml
                     sh "scp -o StrictHostKeyChecking=no docker-compose.yml ${SERVER_IP}:${DEPLOY_DIR}/docker-compose.yml"
+
+                    // Copy tailscale https config
                     sh "scp -o StrictHostKeyChecking=no pihole.json ${SERVER_IP}:${DEPLOY_DIR}/pihole.json"
+
+                    // Copy custom resolv.conf
+                    sh "scp -o StrictHostKeyChecking=no resolv.conf ${SERVER_IP}:${DEPLOY_DIR}/resolv.conf"
                 }
             }
         }
